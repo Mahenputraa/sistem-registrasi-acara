@@ -1,0 +1,6 @@
+RewriteEngine On
+
+# Arahkan semua request ke index.php jika file atau direktori tidak ada
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]

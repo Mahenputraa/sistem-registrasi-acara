@@ -1,0 +1,11 @@
+{
+    "name": "user/sistem-registrasi-acara",
+    "description": "Proyek sistem registrasi acara dengan konsep PBO dan MVC.",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require": {}
+}
