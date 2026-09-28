@@ -1,65 +1,91 @@
-Sistem Registrasi Acara & Workshop
-Sistem Registrasi Acara adalah platform berbasis web yang dirancang untuk memudahkan manajemen pendaftaran acara atau workshop secara efisien. Proyek ini dibangun menggunakan PHP dengan pemisahan struktur folder yang bersih untuk memudahkan pengembangan lebih lanjut.
+# Acara Tech - Sistem Registrasi Acara & Manajemen E-Tiket (Rework v2.0)
 
-🚀 Fitur Utama
-Manajemen Acara: Membuat dan menampilkan daftar acara yang tersedia.
+Aplikasi manajemen acara, registrasi peserta, dan penerbitan e-tiket modern dengan validasi kode QR digital. Direkayasa ulang (*reworked*) dari sistem lama menjadi arsitektur terpisah (*decoupled*) berbasis **Laravel 12 REST API**, **PostgreSQL**, dan **Vite + React SPA**.
 
-Formulir Registrasi: Pendaftaran peserta secara online.
+---
 
-Arsitektur Terstruktur: Menggunakan routing dan templating yang terpisah.
+## 🚀 Arsitektur & Teknologi
 
-Basis Data Terintegrasi: Dilengkapi dengan skema database SQL yang siap pakai.
+```
+sistem-registrasi-acara/
+├── backend/            # Laravel 12 RESTful API + PostgreSQL + Laravel Sanctum
+├── frontend/           # Vite + React 19 + Tailwind CSS + Framer Motion + QR Generator
+└── legacy_backup/      # Arsip aman kode PHP native lama
+```
 
-🛠️ Teknologi yang Digunakan
-Bahasa Pemrograman: PHP 8.x
+### Backend (`/backend`)
+- **Framework**: Laravel 12 (PHP 8.4)
+- **Database**: PostgreSQL 16 (Database: `sistem_registrasi_acara`)
+- **Autentikasi**: Laravel Sanctum (Bearer Token)
+- **Keamanan Transaksi**: *Pessimistic Locking* (`lockForUpdate()`) di PostgreSQL untuk mencegah *overselling* kuota tiket
+- **Fitur API**:
+  - Autentikasi Pengguna & Admin (`/api/auth/*`)
+  - Katalog & Pencarian Acara Real-time (`/api/events`)
+  - Pemesanan Tiket Multi-Peserta (`/api/registrations`)
+  - Tiket Pengguna (`/api/my-tickets`)
+  - Scanner Validasi Check-In Tiket (`/api/check-in`)
+  - Manajemen Acara & Venue (`/api/events`, `/api/venues`)
 
-Database: MySQL/MariaDB
+### Frontend (`/frontend`)
+- **Tooling**: Vite + React 19
+- **Desain & Gaya**: Tailwind CSS, Glassmorphism, Google Fonts (*Plus Jakarta Sans* & *Space Grotesk*)
+- **Animasi**: Framer Motion (Transisi mikro pada tombol, modal dialog, dan kartu acara)
+- **Komponen Modern**: Dialog Modal, Badge status, Card glassmorphism, Sonner Toasts
+- **Fitur Interaktif**:
+  - Kartu Acara dengan filter kategori (*Tatap Muka* & *Online*)
+  - Modal Pemesanan Tiket Multi-tier (General, VIP, Early Bird)
+  - Formulir peserta dinamis sesuai jumlah tiket
+  - Perayaan konfeti visual (*Canvas Confetti*) saat checkout berhasil
+  - Kartu E-Tiket Digital bergaya *Boarding Pass* dengan kode QR SVG aktif (`qrcode.react`)
+  - Modal Scanner Check-In untuk panitia/admin dengan deteksi tiket duplikat
+  - Admin Event Dashboard untuk membuat dan mengelola acara
 
-Dependency Manager: Composer
+---
 
-Frontend: (Sebutkan jika menggunakan Tailwind/Bootstrap, berdasarkan folder templates)
+## 🔑 Akun Uji Coba (Demo Quick Login)
 
-📋 Prasyarat
-Sebelum menjalankan proyek ini, pastikan kamu telah menginstal:
+Tersedia tombol *quick-fill* instan di dalam Modal Login:
 
-PHP >= 8.0
+| Peran | Email | Kata Sandi | Hak Akses |
+| :--- | :--- | :--- | :--- |
+| **Admin** | `admin@acara.com` | `password` | Kelola Acara, Tambah Venue, Scanner Check-In QR |
+| **User** | `budi@user.com` | `password` | Cari Acara, Beli Tiket, Lihat E-Tiket QR Saya |
 
-MySQL Server
+---
 
-Composer
+## 🛠️ Cara Menjalankan Proyek Secara Lokal
 
-⚙️ Instalasi & Konfigurasi
-Clone Repositori
+### 1. Menjalankan Backend (Laravel 12 API)
+Buka terminal pertama:
+```bash
+cd backend
+php artisan serve --port=8000
+```
+API akan berjalan di `http://127.0.0.1:8000`.
 
-Bash
-git clone https://github.com/Ndraa-44/sistem-registrasi-acara.git
-cd sistem-registrasi-acara
-Instal Dependensi
+### 2. Menjalankan Frontend (Vite + React)
+Buka terminal kedua:
+```bash
+cd frontend
+npm run dev
+```
+Buka browser Anda di `http://localhost:5173`.
 
-Bash
-composer install
-Konfigurasi Database
+---
 
-Buat database baru di MySQL (misal: event_platform).
-
-Impor file event_platform.sql ke database tersebut.
-
-Sesuaikan konfigurasi koneksi database di dalam folder app/ (biasanya file config atau .env).
-
-Jalankan Server Lokal
-Jika menggunakan PHP built-in server:
-
-Bash
-php -S localhost:8000 -t public
-Akses melalui browser di http://localhost:8000.
-
-🧠 Tinjauan Kritis (Mitra Diskusi)
-Sesuai dengan peran saya sebagai mitra diskusi intelektual, saya mencatat beberapa poin penting terkait struktur repositori saat ini:
-
-Pemeriksaan Logika (Vendor Folder): Saya melihat folder vendor/ masuk ke dalam pelacakan Git. Secara praktik standar (Best Practice), folder vendor/ seharusnya dimasukkan ke dalam .gitignore karena dependensi harus diinstal melalui composer install oleh masing-masing pengembang. Menyimpan vendor/ di Git akan membuat ukuran repositori membengkak secara tidak perlu.
-
-Tinjauan Asumsi (Keamanan): Proyek ini menyediakan file .sql mentah. Pastikan dalam kode PHP-mu, kamu tidak mengasumsikan database selalu memiliki kredensial root tanpa password. Saya sarankan menambahkan contoh file .env.example agar pengguna tahu variabel lingkungan apa saja yang perlu diatur tanpa mengekspos rahasia asli.
-
-Sudut Pandang Alternatif (Deployment): Jika sistem ini akan dikembangkan menjadi proyek skala besar atau didaftarkan untuk tugas kuliah semester 5, pertimbangkan untuk menambahkan validasi input di sisi server dan sanitasi database (PDO/Prepared Statements) untuk menghindari SQL Injection, mengingat ini adalah "Sistem Registrasi" yang rawan serangan input.
-
-Koreksi Alur: Di dalam folder public/, pastikan file index.php berfungsi sebagai Single Entry Point. Jika tidak, dokumentasi di atas mungkin perlu disesuaikan tergantung bagaimana kamu menangani routing di folder routes/.
+## 🛡️ Database & Migrasi (Opsional)
+Jika ingin me-reset database PostgreSQL:
+```bash
+cd backend
+php artisan migrate:fresh --seed
+```
+Koneksi PostgreSQL dikonfigurasi pada `backend/.env`:
+```env
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=sistem_registrasi_acara
+DB_USERNAME=postgres
+DB_PASSWORD=your_password_here
+DB_SSLMODE=disable
+```

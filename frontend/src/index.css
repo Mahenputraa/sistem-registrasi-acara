@@ -1,0 +1,235 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Theme Tokens: Light Mode Defaults */
+    --color-bg-ink: #f8fafc;
+    --color-surface-card: #ffffff;
+    --color-surface-elevated: #f1f5f9;
+    --color-border-hairline: #e2e8f0;
+    --color-border-subtle: #cbd5e1;
+    
+    --color-accent-tangerine: #ff5c00;
+    --color-accent-amber: #f59e0b;
+  }
+
+  .dark {
+    /* Theme Tokens: Deep Ink & Signal Tangerine */
+    --color-bg-ink: #090a0f;
+    --color-surface-card: #11141e;
+    --color-surface-elevated: #161b28;
+    --color-border-hairline: #1e2536;
+    --color-border-subtle: #293247;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg-ink);
+    color: #0f172a;
+    overflow-x: hidden;
+    min-height: 100vh;
+    letter-spacing: -0.01em;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .dark body {
+    color: #f8fafc;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+}
+
+/* Authentic Ticket Artifact utilities */
+.ink-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.dark .ink-panel {
+  background: rgba(12, 15, 23, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ink-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .ink-card {
+  background: #11141e;
+  border-color: #1e2536;
+}
+
+.ink-card:hover {
+  border-color: #cbd5e1;
+}
+
+.dark .ink-card:hover {
+  border-color: #3b455e;
+}
+
+.ink-card-interactive {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.dark .ink-card-interactive {
+  background: #11141e;
+  border-color: #1e2536;
+}
+
+.ink-card-interactive:hover {
+  border-color: #ff5c00;
+  box-shadow: 0 12px 30px -10px rgba(255, 92, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Ticket Perforation effect */
+.ticket-perforation-v {
+  position: relative;
+}
+
+.ticket-perforation-v::before,
+.ticket-perforation-v::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background-color: #f8fafc;
+  border-radius: 50%;
+  z-index: 10;
+  transition: background-color 0.25s ease;
+}
+
+.dark .ticket-perforation-v::before,
+.dark .ticket-perforation-v::after {
+  background-color: #090a0f;
+}
+
+.ticket-perforation-v::before {
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ticket-perforation-v::after {
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ticket-dashed-line {
+  border-style: dashed;
+  border-color: #cbd5e1;
+}
+
+.dark .ticket-dashed-line {
+  border-color: #293247;
+}
+
+/* Badge styles */
+.date-stamp {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #090a0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #252d40;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #37435f;
+}
+
+/* GPU-Accelerated Atmospheric Hero Animations */
+@keyframes hero-ken-burns {
+  0% {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.12) translate3d(-1.5%, -1%, 0);
+  }
+  100% {
+    transform: scale(1.06) translate3d(1%, 0.5%, 0);
+  }
+}
+
+@keyframes float-orb-1 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate3d(-40px, 25px, 0) scale(1.18);
+    opacity: 0.5;
+  }
+}
+
+@keyframes float-orb-2 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translate3d(35px, -30px, 0) scale(1.22);
+    opacity: 0.4;
+  }
+}
+
+.animate-hero-bg {
+  animation: hero-ken-burns 28s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.animate-orb-1 {
+  animation: float-orb-1 12s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-orb-2 {
+  animation: float-orb-2 16s ease-in-out infinite 2s;
+  will-change: transform, opacity;
+}
