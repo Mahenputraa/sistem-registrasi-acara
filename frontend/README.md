@@ -1,16 +1,51 @@
-# React + Vite
+# 🎨 Acara Tech — Frontend Client (React 19 + Vite 8)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Aplikasi klien Single Page Application (SPA) untuk platform registrasi acara dan manajemen e-tiket **Acara Tech**. Dibangun dengan **React 19**, **Vite 8**, **Tailwind CSS v4**, **Framer Motion**, dan **Zustand**.
 
-Currently, two official plugins are available:
+> 💡 **Dokumentasi Lengkap Proyek**: Silakan baca berkas utama [**README.md di direktori akar**](../README.md) untuk panduan menyeluruh tentang arsitektur sistem, database, dan API backend.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🛠️ Ringkasan Teknologi Frontend
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Framework & Bundler**: React 19 + Vite 8 (Rolldown / Rolldown runtime)
+- **Styling**: Tailwind CSS v4 + Glassmorphism UI
+- **Desain & Tema**: Dual Theme (_Dark & Light Mode_) dengan Google Fonts (_Plus Jakarta Sans_ & _Space Grotesk_)
+- **Animasi & Interaksi**: Framer Motion (transisi halaman & modal) + Canvas Confetti
+- **State Management**: Zustand (`useModalStore`, `useAuthStore`) + React Context (`AuthContext`, `ThemeContext`)
+- **Notifikasi**: Sonner Toasts
+- **QR Generator**: `qrcode.react` (SVG QR Code untuk tiket boarding pass)
+- **Kinerja**: _Dynamic Route Code-Splitting_ (`React.lazy` + `Suspense`) & _Vendor Chunking_ (< 115 kB main chunk)
+- **Linter**: Oxlint
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## 🚀 Menjalankan Server Pengembangan
+
+### 1. Pasang Dependensi
+
+```bash
+npm install
+```
+
+### 2. Jalankan Mode Development
+
+```bash
+npm run dev
+```
+
+Aplikasi akan aktif di `http://localhost:5173`.
+
+Vite telah dikonfigurasi dengan reverse proxy otomatis:
+
+- `/api` ➡️ `http://127.0.0.1:8000`
+- `/storage` ➡️ `http://127.0.0.1:8000` (untuk memuat gambar avatar pengguna yang diunggah)
+
+---
+
+## 📦 Skrip yang Tersedia
+
+- `npm run dev`: Menjalankan development server dengan Hot Module Replacement (HMR).
+- `npm run build`: Membangun bundle produksi teroptimasi ke direktori `dist/`.
+- `npm run lint`: Menjalankan pemeriksaan linter cepat dengan Oxlint.
+- `npm run preview`: Menjalankan server preview lokal untuk hasil build `dist/`.
